@@ -1,22 +1,50 @@
 import { AudioOutlined } from "@ant-design/icons";
-import { Card, Input, Space } from "antd";
+import { Card, Input, Spin } from "antd";
+import { useState } from "react";
 
 const { Search } = Input;
 
+const spinner = (
+  <>
+    <Spin size="large" />
+  </>
+);
+
 export default function App() {
-  const onSearch = (value: string) => console.log(value);
+  const [data, setData] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const onSearch = (value: string) => {
+    setData("");
+    setLoading(true);
+    fetch("/api/generate", {
+      method: "POST",
+      body: JSON.stringify({ pergunta: value }),
+    })
+      .then((response) => response.text())
+      .then((data) => {
+        setLoading(false);
+        setData(data);
+      })
+      .catch(err => console.log(err));
+  };
 
   return (
     <>
-      <Space direction="vertical" align="center" size="middle" style={{ display: 'flex' }}>
-        <Card title="Card" size="small">
-          <Search
-            placeholder="input search text"
-            onSearch={onSearch}
-            style={{ width: 300 }}
-          />
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100vh",
+        }}
+      >
+        <Card title="Faça uma pergunta" style={{ width: 400 }}>
+          <Search placeholder="Digite" onSearch={onSearch} />
+          {loading && <p style={{ textAlign: "center" }}>{spinner}</p>}
+          {data && <p>{data}</p>}
         </Card>
-      </Space>
+      </div>
     </>
   );
 }

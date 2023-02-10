@@ -11,10 +11,10 @@ const pergunte = async function pergunte(text: string) {
         model: "text-davinci-003",
         prompt: text,
         max_tokens: 500,
-        temperature: 0.5,
-        top_p: 0,
-        frequency_penalty: 0,
-        presence_penalty: 0,
+        temperature: 0,
+        top_p: 1,
+        frequency_penalty: 0.0,
+        presence_penalty: 0.0,
         stop: ""
     });
 

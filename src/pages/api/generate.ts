@@ -17,8 +17,9 @@ export default async function handler(
       return;
     }
     try {
-      const response = await pergunte(pergunta);
-      res.status(200).send(response);
+      return pergunte(pergunta).then((response: any) => {
+        res.status(200).send(response);
+      });
     } catch (err) {
       console.log("error: " + err);
       res.status(500).end("Erro por favor tente novamente mais tarde");

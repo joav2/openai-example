@@ -6,19 +6,21 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-const pergunte = async function pergunte(text: string) {
-    const response = await openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: text,
-        max_tokens: 150,
-        temperature: 0.6,
-        top_p: 1,
-        frequency_penalty: 0.0,
-        presence_penalty: 0.0,
-        stop: ""
-    });
+const pergunte = function pergunte(text: string) {
+    return new Promise( async (resolve, reject) => {
+        const response = await openai.createCompletion({
+            model: "text-davinci-003",
+            prompt: text,
+            max_tokens: 500,
+            temperature: 0.6,
+            top_p: 1,
+            frequency_penalty: 0.0,
+            presence_penalty: 0.0,
+            stop: ""
+        });
 
-    return response.data.choices[0].text;
+        resolve(response.data.choices[0].text);
+    });
 }
 
 module.exports = pergunte;

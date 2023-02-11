@@ -14,7 +14,7 @@ export default function App() {
   const [data, setData] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const onSearch = (value: string) => {
+  const onSearch = async (value: string) => {
     setData("");
     setLoading(true);
     fetch("/api/generate", {
@@ -26,7 +26,7 @@ export default function App() {
         setLoading(false);
         setData(data);
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
   return (

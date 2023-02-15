@@ -1,19 +1,12 @@
-import { Inter } from "@next/font/google";
-import App from "../components/App";
+import { ReactElement } from "react";
+import type { NextPageWithLayout } from "./_app";
 
-const inter = Inter({ subsets: ["latin"] });
-
-const theme = {
-  colors: {
-    primary: "tomato",
-    accent: "yellow",
-  },
+const Page: NextPageWithLayout = () => {
+  return <p>hello world</p>;
 };
 
-export default function Home() {
-  return (
-    <>
-      <App />
-    </>
-  );
-}
+Page.getLayout = function getLayout(page: ReactElement) {
+  return <>{page}</>;
+};
+
+export default Page;
